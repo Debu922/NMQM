@@ -30,11 +30,13 @@ fig = plt.figure(figsize = (12,9))
 axis = plt.axes(xlim=(-1/2,1/2),ylim =(0,10))
 line, = axis.plot([],[],lw =2)
 
+animspeed = para.animspeed
+
 def animate(i):
-    line.set_data(x,np.abs(result[i*20]))
+    line.set_data(x,np.abs(result[i*animspeed]))
     return line,
 
-nanim=int(nt/20)
+nanim=int(nt/animspeed)
 anim = FuncAnimation(fig, animate, frames = nanim, interval = 1, blit = True)
 #anim.save('/home/nanarbar/Desktop/shiggydiggy.mp4', writer = 'ffmpeg', fps = 60)
 
