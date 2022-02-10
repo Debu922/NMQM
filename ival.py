@@ -1,10 +1,7 @@
 import numpy as np
 import sympy as sp
 
-from matplotlib import pyplot as plt
-from sympy import init_printing
 from sympy.utilities.lambdify import lambdify
-from matplotlib.animation import FuncAnimation
 
 
 #################################################
