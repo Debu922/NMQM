@@ -22,4 +22,5 @@ def initcond1(G):
     potential
     '''
     G.V=(my_fft.x_mesh**2+my_fft.y_mesh**2+my_fft.z_mesh**2)/2
+    # G.V = G.V *0
     del my_fft.x_mesh,my_fft.y_mesh,my_fft.z_mesh

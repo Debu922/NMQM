@@ -60,3 +60,10 @@ class Wavefunction:
         self.psik= self.psik*np.exp(-1j*my_fft.ksqr/2*para.dt)
         self.psi=my_fft.inverse_transform(self.psik)
         self.psi= self.psi*np.exp(-1j*(self.V+para.Nlin*np.abs(self.psi)**2)*para.dt/2)
+
+    def i_time_sstep_strang(self):
+        self.psi= self.psi*np.exp(-1j*(self.V+para.Nlin*np.abs(self.psi)**2)*1j*para.dt/2)
+        self.psik=my_fft.forward_transform(self.psi)
+        self.psik= self.psik*np.exp(-1j*my_fft.ksqr/2*1j*para.dt)
+        self.psi=my_fft.inverse_transform(self.psik)
+        self.psi= self.psi*np.exp(-1j*(self.V+para.Nlin*np.abs(self.psi)**2)*1j*para.dt/2)

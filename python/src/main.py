@@ -6,6 +6,7 @@ from my_fft import *
 
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+from matplotlib.animation import FFMpegWriter
 import numpy as np
 
 
@@ -16,32 +17,37 @@ G=Wavefunction()
 G.set_arrays()
 init_cond.initcond1(G)
 
-output = []
+output = np.zeros((para.Ngt,G.psi.shape[2]))
 
 j=0
 for i in range(para.Ngt):
-    G.sstep_strang()
+    G.i_time_sstep_strang()
     abs_psi = np.abs(G.psi).squeeze()
-    output.append(abs_psi)
-    if (para.tstepMov[j]-t)/para.dt<para.dt:
-        print('\n----------------------')
-        print('t: ',t)
-        print('norm: ',G.norm())
-        print('energy: ',G.energy())
-        j=j+1
-    t =t+para.dt
+    output[i,:] = abs_psi
+    # if (para.tstepMov[j]-t)/para.dt<para.dt:
+    #     print('\n----------------------')
+    #     print('t: ',t)
+    #     print('norm: ',G.norm())
+    #     print('energy: ',G.energy())
+    #     j=j+1
+    # t =t+para.dt
 print(len(output))
 
 figure,ax = plt.subplots(figsize=(15, 8))
+line, = ax.plot(output[i,:])
+line.set_xdata(range(G.psi.shape[2]))
+ax.set_ylim([0,1])
 def animation_function(i):
-    ax.clear()
-    plot = plt.plot(output[i])
-    return plot
+    line.set_ydata(output[i*100,:])
+    if i%100==0:
+        print("Stitching image ",i)
+    return line
   
 animation = FuncAnimation(figure,
                           func = animation_function,
-                          frames = len(output)), 
-                          interval = 10)
+                          frames = int(len(output)/100), 
+                          interval = 1000)
 
-writervideo = animation.FFMpegWriter(fps=60)
-anim.save('increasingStraightLine.mp4', writer=writervideo)
+writervideo = FFMpegWriter(fps=60)
+animation.save('output.mp4', writer=writervideo)
+plt.close()
