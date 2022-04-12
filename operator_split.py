@@ -2,12 +2,14 @@ from math import pi
 from math import sqrt
 
 import numpy as np
-import pandas as pd
+# import pandas as pd
 from pyparsing import col
 
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
-from matplotlib.animation import FFMpegWriter
+# import matplotlib.pyplot as plt
+# from matplotlib.animation import FuncAnimation
+# from matplotlib.animation import FFMpegWriter
+from timeit import default_timer as timer
+
 
 class Param:
     """Container for holding all simulation parameters."""
@@ -30,7 +32,6 @@ class Param:
         self.dk = pi / xmax
         self.k = np.concatenate((np.arange(0, res / 2),
                                  np.arange(-res / 2, 0))) * self.dk
-
         self.skip_frame = skip_frame
 
 
@@ -49,7 +50,7 @@ def init(par: Param, voffset: float, wfcoffset: float, velocity:float) -> Operat
     opr = Operators(len(par.x))
     opr.V = 0.5 * (par.x - voffset) ** 2
     # Free Particle
-    # opr.V = opr.V*0
+    opr.V = opr.V*0
     
     # Wall:
 
@@ -152,6 +153,8 @@ def generate_animation(output,par,energy):
     return 0
 
 
+
+# ...
 def main() -> None:
     par = Param(20, 2<<10, 0.0001, 100000, False, 50)
 
@@ -159,14 +162,17 @@ def main() -> None:
     
 
     opr = init(par, 0.0, -10,10)
-    energy = calculate_energy(par, opr)
-    print("Energy at start is: ", energy)
+    # energy = calculate_energy(par, opr)
+    # print("Energy at start is: ", energy)
+    start = timer()
     output = split_op(par, opr)
+    end = timer()
+    print(end - start) 
 
-    energy = calculate_energy(par, opr)
-    print("Energy at end is: ", energy)
+    # energy = calculate_energy(par, opr)
+    # print("Energy at end is: ", energy)
 
-    generate_animation(output,par,energy)
+    # generate_animation(output,par,energy)
 
 if __name__ == "__main__":
     main()
