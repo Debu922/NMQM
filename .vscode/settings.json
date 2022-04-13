@@ -60,6 +60,7 @@
         "stop_token": "cpp",
         "streambuf": "cpp",
         "thread": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "complex": "cpp"
     }
 }
