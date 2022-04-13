@@ -1,6 +1,6 @@
 /*
 Schrodinger Wave Equation Solver
-1) FFTW
+DependencesFFTW
 */
 #include <iostream>
 #include <iomanip>
@@ -17,20 +17,34 @@ Param set_params(int argc, char** argv);
 
 int main(int argc, char** argv)
 {
-  // Init simulation
+  // INIT SIMULATION
+
+  // Start Clock
   auto start = high_resolution_clock::now();
+
+  // Init Parameters and WFC
   Param param = set_params(argc, argv);
   WFC wfc(&param);
+
+  // Stop Clock
   auto stop = high_resolution_clock::now();
+
+  // Output init time
   auto duration = duration_cast<milliseconds>(stop - start);
   std::cout << "Time taken to init simulation: "
       << duration.count() << " ms" << std::endl;
 
+  // RUN SIMULATION
+  // Start time
   start = high_resolution_clock::now();
-  wfc.simulate(param.timesteps);
-  stop = high_resolution_clock::now();
-  // Set Intial Conditions
 
+  // Simulate
+  wfc.simulate(param.timesteps);
+
+  // Stop time
+  stop = high_resolution_clock::now();
+
+  // Output simulation time
   duration = duration_cast<milliseconds>(stop - start);
  
     std::cout << "Time taken to evolve "<<param.timesteps<< " timesteps:  "
@@ -39,10 +53,17 @@ int main(int argc, char** argv)
   return 0;
 }
 
+/**
+ * @brief Set the params object
+ * 
+ * @param argc 
+ * @param argv 
+ * @return Param 
+ */
 Param set_params(int argc, char** argv){
 
   Param param;
-  param.dims = 2;
+  param.dims = 3;
   param.xmax = 20;
   param.res = 2 << 5;
   param.Nx = 2 * param.res;

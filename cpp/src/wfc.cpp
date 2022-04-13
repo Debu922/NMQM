@@ -36,7 +36,7 @@ void WFC::set_psi_1D()
         psi[i] = exp(-(pow(param->x1[i] - param->psiX1Offset, 2.0) * 0.5 + param->psiV1Offset * param->x1[i] * 1.0i));
     }
     // Normalize WFC
-    double x = 1/sqrt(this->norm());
+    double x = 1 / sqrt(this->norm());
     for (int i = 0; i < param->Nx; i++)
     {
         psi[i] *= x;
@@ -56,7 +56,7 @@ void WFC::set_psi_2D()
         }
     }
     // Normalize WFC
-    double x = sqrt(1/this->norm());
+    double x = sqrt(1 / this->norm());
     // std::cout<<x<<" ";
     for (int i = 0; i < param->Nx * param->Nx; i++)
     {
@@ -79,10 +79,10 @@ void WFC::set_psi_3D()
             }
         }
     }
-    double norm = this->norm();
+    double x = sqrt(1 / this->norm());
     for (int i = 0; i < Nx * Nx * Nx; i++)
     {
-        psi[i] /= norm*sqrt(norm);
+        psi[i] *= x;
     }
 }
 
@@ -203,7 +203,7 @@ void WFC::R_half_step_2D()
     {
         for (int j = 0; j < param->Nx; j++)
         {
-            psi[i * param->Nx + j] *= R[i * param->Nx + j]*x;
+            psi[i * param->Nx + j] *= R[i * param->Nx + j] * x;
         }
     }
 }
@@ -293,11 +293,11 @@ void WFC::FT_3D()
     n[0] = param->Nx;
     n[1] = param->Nx;
     n[2] = param->Nx;
-    FT_forward_plan = fftw_plan_dft(2, n,
+    FT_forward_plan = fftw_plan_dft(3, n,
                                     reinterpret_cast<fftw_complex *>(psi),
                                     reinterpret_cast<fftw_complex *>(psi),
                                     FFTW_FORWARD, FFTW_ESTIMATE);
-    FT_backward_plan = fftw_plan_dft(2, n,
+    FT_backward_plan = fftw_plan_dft(3, n,
                                      reinterpret_cast<fftw_complex *>(psi),
                                      reinterpret_cast<fftw_complex *>(psi),
                                      FFTW_BACKWARD, FFTW_ESTIMATE);
@@ -313,14 +313,16 @@ void WFC::step()
         K_full_step_1D();
         fftw_execute(FT_backward_plan);
         R_half_step_1D();
-    } else if (param->dims == 2)
+    }
+    else if (param->dims == 2)
     {
         R_half_step_2D();
         fftw_execute(FT_forward_plan);
         K_full_step_2D();
         fftw_execute(FT_backward_plan);
         R_half_step_2D();
-    } else if (param->dims == 3)
+    }
+    else if (param->dims == 3)
     {
         R_half_step_3D();
         fftw_execute(FT_forward_plan);
@@ -383,11 +385,11 @@ double WFC::norm()
 {
     double norm = 0;
     int N = param->Nx;
-    if (param-> dims==2)
+    if (param->dims == 2)
         N = param->Nx * param->Nx;
-    else if (param-> dims==3)
-        N = param->Nx * param->Nx* param->Nx;
-    
+    else if (param->dims == 3)
+        N = param->Nx * param->Nx * param->Nx;
+
     for (int i = 0; i < N; i++)
     {
         norm += real(psi[i] * conj(psi[i]));

@@ -17,11 +17,6 @@ public:
   fftw_plan FT_forward_plan;
   fftw_plan FT_backward_plan;
 
-  /**
-   * @brief Set the wfc object to its intial state.
-   *
-   */
-
   void alloc_var();
 
   void set_psi_1D();
