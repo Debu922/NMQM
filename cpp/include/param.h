@@ -20,7 +20,6 @@ public:
   bool im_time = false;
   double dx = 2 * xmax / res;
   double dk = M_PI / xmax;
-  double vel = 0.0;
 
   double psiX1Offset = 0.0;
   double psiX2Offset = 0.0;
@@ -29,6 +28,9 @@ public:
   double psiV1Offset = 1.0;
   double psiV2Offset = 1.0;
   double psiV3Offset = 1.0;
+
+  double verbose = false;
+  int iter = 1;
   
 
   std::complex<double> *x1;

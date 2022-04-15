@@ -8,6 +8,7 @@ DependencesFFTW
 #include <chrono>
 #include "param.h"
 #include "wfc.h"
+#include "string.h"
 
 
 using namespace std::complex_literals;
@@ -15,42 +16,43 @@ using namespace std::chrono;
 
 Param set_params(int argc, char** argv);
 
-int main(int argc, char** argv)
-{
-  // INIT SIMULATION
+void simulation(int i, Param *param){
 
-  // Start Clock
+  // INIT PHASE
   auto start = high_resolution_clock::now();
-
-  // Init Parameters and WFC
-  Param param = set_params(argc, argv);
-  WFC wfc(&param);
-
-  // Stop Clock
+  WFC wfc(param);
   auto stop = high_resolution_clock::now();
 
-  // Output init time
-  auto duration = duration_cast<milliseconds>(stop - start);
-  std::cout << "Time taken to init simulation: "
-      << duration.count() << " ms" << std::endl;
+  auto duration = duration_cast<nanoseconds>(stop - start);
+  if (param->verbose)
+    std::cout << i <<"\t"
+      << duration.count() << "\t";
 
   // RUN SIMULATION
-  // Start time
   start = high_resolution_clock::now();
-
-  // Simulate
-  wfc.simulate(param.timesteps);
-
-  // Stop time
+  wfc.simulate(param->timesteps);
   stop = high_resolution_clock::now();
 
-  // Output simulation time
-  duration = duration_cast<milliseconds>(stop - start);
- 
-    std::cout << "Time taken to evolve "<<param.timesteps<< " timesteps:  "
-         << duration.count() << " ms" << std::endl;
+  duration = duration_cast<nanoseconds>(stop - start);
+  if (param->verbose)
+    std::cout << duration.count()<<std::endl;
 
-  return 0;
+}
+
+int main(int argc, char** argv)
+{
+ 
+//  Simulation data output
+for (int i = 1; i < argc; i++)
+  std::cout<<argv[i]<<" ";
+std::cout<<std::endl;
+Param param = set_params(argc,argv);
+
+for (int i = 0; i<param.iter; i++)
+  simulation(i,&param);
+
+std::cout<<std::endl;
+return 0;
 }
 
 /**
@@ -63,16 +65,13 @@ int main(int argc, char** argv)
 Param set_params(int argc, char** argv){
 
   Param param;
-  param.dims = 3;
+  // Default params
+  param.dims = 1;
   param.xmax = 20;
   param.res = 2 << 5;
-  param.Nx = 2 * param.res;
   param.dt = 0.0001;
-  param.timesteps = 10000;
+  param.timesteps = 100;
   param.im_time = false;
-  param. dx = param.xmax / param.res;
-  param. dk = M_PI / param.xmax;
-  param. vel = 0.0;
 
   param.psiX1Offset = 1.0;
   param.psiX2Offset = 1.0;
@@ -80,6 +79,60 @@ Param set_params(int argc, char** argv){
   param.psiV1Offset = 1.0;
   param.psiV2Offset = 1.0;
   param.psiV3Offset = 1.0;
+
+  int i = 1;
+  // std::cout<<argc;
+  while (i <= argc){
+    if (strcmp(argv[i],"-iter")==0)
+      param.iter = std::stoi(argv[i+1]);
+
+    if (strcmp(argv[i] ,"-dims")==0)
+      param.dims = std::stoi(argv[i+1]);
+
+    if (strcmp(argv[i] ,"-xmax")==0)
+      param.xmax = std::stod(argv[i+1]);
+  
+    if (strcmp(argv[i] ,"-res")==0)
+      param.res = std::stoi(argv[i+1]);
+    
+    if (strcmp(argv[i] ,"-dims")==0)
+      param.dims = std::stoi(argv[i+1]);
+
+    if (strcmp(argv[i] ,"-dt")==0)
+      param.dt = std::stod(argv[i+1]);
+
+    if (strcmp(argv[i] ,"-timesteps")==0)
+      param.timesteps = std::stoi(argv[i+1]);
+
+    if (strcmp(argv[i] ,"-im_time")==0)
+      param.im_time = std::stoi(argv[i+1]);
+
+    if (strcmp(argv[i] ,"-psiX1Offset")==0)
+      param.psiX1Offset = std::stod(argv[i+1]);
+
+    if (strcmp(argv[i] ,"-psiX2Offset")==0)
+      param.psiX2Offset = std::stod(argv[i+1]);
+
+    if (strcmp(argv[i] ,"-psiX3Offset")==0)
+      param.psiX3Offset = std::stod(argv[i+1]);
+
+    if (strcmp(argv[i] ,"-psiV1Offset")==0)
+      param.psiV1Offset = std::stod(argv[i+1]);
+
+    if (strcmp(argv[i] ,"-psiV2Offset")==0)
+      param.psiV2Offset = std::stod(argv[i+1]);
+
+    if (strcmp(argv[i] ,"-psiV3Offset")==0)
+      param.psiV3Offset = std::stod(argv[i+1]);
+    
+    if (strcmp(argv[i] ,"-verbose")==0)
+      param.verbose=true;
+    i+=2;
+  }
+
+  param.Nx = 2 * param.res;
+  param. dx = param.xmax / param.res;
+  param. dk = M_PI / param.xmax;
 
   param.init_param();
 

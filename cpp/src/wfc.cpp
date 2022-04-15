@@ -337,10 +337,10 @@ void WFC::simulate(int nSteps)
     for (int n = 0; n < nSteps; n++)
     {
         step();
-        if (n % 1000 == 0)
-        {
-            std::cout << "Normalization = " << norm() << std::endl;
-        }
+        // if (n % 1000 == 0)
+        // {
+        //     std::cout << "Normalization = " << norm() << std::endl;
+        // }
     }
 }
 
