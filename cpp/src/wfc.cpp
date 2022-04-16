@@ -2,7 +2,6 @@
 #include <complex>
 #include <iostream>
 
-using namespace std::complex_literals;
 
 void WFC::alloc_var()
 {
@@ -31,9 +30,10 @@ void WFC::alloc_var()
 
 void WFC::set_psi_1D()
 {
+    std::complex<double> img(0, 1.0);
     for (int i = 0; i < param->Nx; i++)
     {
-        psi[i] = exp(-(pow(param->x1[i] - param->psiX1Offset, 2.0) * 0.5 + param->psiV1Offset * param->x1[i] * 1.0i));
+        psi[i] = exp(-(pow(param->x1[i] - param->psiX1Offset, 2.0) * 0.5 + param->psiV1Offset * param->x1[i] * 1.0*img));
     }
     // Normalize WFC
     double x = 1 / sqrt(this->norm());
@@ -44,6 +44,7 @@ void WFC::set_psi_1D()
 }
 void WFC::set_psi_2D()
 {
+    std::complex<double> img(0, 1.0);
     int Nx = param->Nx;
     for (int i = 0; i < param->Nx; i++)
     {
@@ -51,7 +52,7 @@ void WFC::set_psi_2D()
         {
             psi[i * Nx + j] = exp(-(
                 (pow(param->x1[i] - param->psiX1Offset, 2.0) + pow(param->x2[j] - param->psiX2Offset, 2.0)) * 0.5 +
-                (param->psiV1Offset * param->x1[i] + param->psiV2Offset * param->x2[j]) * 1.0i));
+                (param->psiV1Offset * param->x1[i] + param->psiV2Offset * param->x2[j]) * 1.0*img));
             // std::cout<<" "<<psi[i * Nx + j];
         }
     }
@@ -65,7 +66,8 @@ void WFC::set_psi_2D()
 }
 
 void WFC::set_psi_3D()
-{
+{   
+    std::complex<double> img(0, 1.0);
     int Nx = param->Nx;
     for (int i = 0; i < param->Nx; i++)
     {
@@ -75,7 +77,7 @@ void WFC::set_psi_3D()
             {
                 psi[(i * Nx + j) * Nx + k] = exp(-(
                     (pow(param->x1[i] - param->psiX1Offset, 2.0) + pow(param->x2[j] - param->psiX2Offset, 2.0) + pow(param->x3[k] - param->psiX3Offset, 2.0)) * 0.5 +
-                    (param->psiV1Offset * param->x1[i] + param->psiV2Offset * param->x2[j] + param->psiV3Offset * param->x3[k]) * 1.0i));
+                    (param->psiV1Offset * param->x1[i] + param->psiV2Offset * param->x2[j] + param->psiV3Offset * param->x3[k]) * 1.0*img));
             }
         }
     }
@@ -122,25 +124,28 @@ void WFC::set_V_3D()
 
 void WFC::set_K_1D()
 {
+    std::complex<double> img(0, 1.0);
     for (int i = 0; i < param->Nx; i++)
     {
-        K[i] = exp(-pow(param->k1[i], 2.0) * 0.5i * param->dt);
+        K[i] = exp(-pow(param->k1[i], 2.0) * 0.5*img * param->dt);
     }
 }
 
 void WFC::set_K_2D()
 {
+    std::complex<double> img(0, 1.0);
     for (int i = 0; i < param->Nx; i++)
     {
         for (int j = 0; j < param->Nx; j++)
         {
-            K[i * param->Nx + j] = exp(-(pow(param->k1[i], 2.0) + pow(param->k2[j], 2.0)) * 0.5i * param->dt);
+            K[i * param->Nx + j] = exp(-(pow(param->k1[i], 2.0) + pow(param->k2[j], 2.0)) * 0.5 *img * param->dt);
         }
     }
 }
 
 void WFC::set_K_3D()
 {
+    std::complex<double> img(0, 1.0);
     int Nx = param->Nx;
     for (int i = 0; i < param->Nx; i++)
     {
@@ -148,32 +153,35 @@ void WFC::set_K_3D()
         {
             for (int k = 0; k < param->Nx; k++)
             {
-                K[(i * Nx + j) * Nx + k] = exp(-(pow(param->k1[i], 2.0) + pow(param->k2[j], 2.0) + +pow(param->k3[k], 2.0)) * 0.5i * param->dt);
+                K[(i * Nx + j) * Nx + k] = exp(-(pow(param->k1[i], 2.0) + pow(param->k2[j], 2.0) + +pow(param->k3[k], 2.0)) * 0.5*img * param->dt);
             }
         }
     }
 }
 void WFC::set_R_1D()
 {
+    std::complex<double> img(0, 1.0);
     for (int i = 0; i < param->Nx; i++)
     {
-        R[i] = exp(-V[i] * 0.5i * param->dt);
+        R[i] = exp(-V[i] * 0.5*img * param->dt);
     }
 }
 
 void WFC::set_R_2D()
 {
+    std::complex<double> img(0, 1.0);
     for (int i = 0; i < param->Nx; i++)
     {
         for (int j = 0; j < param->Nx; j++)
         {
-            R[i * param->Nx + j] = exp(-V[i * param->Nx + j] * 0.5i * param->dt);
+            R[i * param->Nx + j] = exp(-V[i * param->Nx + j] * 0.5*img * param->dt);
         }
     }
 }
 
 void WFC::set_R_3D()
 {
+    std::complex<double> img(0, 1.0);
     int Nx = param->Nx;
     for (int i = 0; i < param->Nx; i++)
     {
@@ -181,7 +189,7 @@ void WFC::set_R_3D()
         {
             for (int k = 0; k < param->Nx; k++)
             {
-                R[(i * Nx + j) * Nx + k] = exp(-V[(i * Nx + j) * Nx + k] * 0.5i * param->dt);
+                R[(i * Nx + j) * Nx + k] = exp(-V[(i * Nx + j) * Nx + k] * 0.5*img * param->dt);
             }
         }
     }

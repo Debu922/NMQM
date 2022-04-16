@@ -8,10 +8,9 @@ DependencesFFTW
 #include <chrono>
 #include "param.h"
 #include "wfc.h"
-#include "string.h"
+#include <string.h>
 
 
-using namespace std::complex_literals;
 using namespace std::chrono;
 
 Param set_params(int argc, char** argv);

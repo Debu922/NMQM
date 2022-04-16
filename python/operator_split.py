@@ -1,5 +1,6 @@
 from math import pi
 from math import sqrt
+from sys import argv
 
 import numpy as np
 # import pandas as pd
@@ -155,7 +156,22 @@ def generate_animation(output,par,energy):
 
 
 # ...
-def main() -> None:
+def main() -> None: 
+    i = 0
+    dims = 1
+    res = 16
+    iter = 10
+    timesteps = 1000
+    while i < len(argv):
+        if argv[i] == "-dims":
+            dims = int(argv[i+1])
+        if argv[i] == "-res":
+        
+        if argv[i] == "-iter":
+
+        if argv[i] == "-timesteps":
+
+        i+=2
     par = Param(20, 2<<10, 0.0001, 100000, False, 50)
 
     # Starting wavefunction slightly offset so we can see it change
