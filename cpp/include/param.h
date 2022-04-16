@@ -2,7 +2,6 @@
 #define __PARAM_H__
 
 #include <complex>
-using namespace std::complex_literals;
 
 class Init{
   
