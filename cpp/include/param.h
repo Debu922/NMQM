@@ -10,26 +10,26 @@ class Init{
 class Param
 {
 public:
-  int dims = 1;
-  double xmax = 5;
-  int res = 2 << 10;
-  int Nx = 2 * res;
-  double dt = 0.0001;
-  int timesteps = 10000;
-  bool im_time = false;
-  double dx = 2 * xmax / res;
-  double dk = M_PI / xmax;
+  int dims;
+  double xmax;
+  int res;
+  int Nx;
+  double dt;
+  int timesteps;
+  bool im_time;
+  double dx ;
+  double dk ;
 
-  double psiX1Offset = 0.0;
-  double psiX2Offset = 0.0;
-  double psiX3Offset = 0.0;
+  double psiX1Offset ;
+  double psiX2Offset ;
+  double psiX3Offset ;
   
-  double psiV1Offset = 1.0;
-  double psiV2Offset = 1.0;
-  double psiV3Offset = 1.0;
+  double psiV1Offset;
+  double psiV2Offset;
+  double psiV3Offset;
 
-  double verbose = false;
-  int iter = 1;
+  double verbose ;
+  int iter;
   
 
   std::complex<double> *x1;

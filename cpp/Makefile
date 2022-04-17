@@ -7,7 +7,7 @@
 CXX = g++
 
 # define any compile-time flags
-CXXFLAGS	:= -Wall -Wextra -g -O3
+CXXFLAGS	:= -std=c++11 -Wall -Wextra -g -O3
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify

@@ -1,3 +1,5 @@
+#!/bin/python3
+
 from math import pi
 from math import sqrt
 from sys import argv
@@ -166,13 +168,13 @@ def main() -> None:
         if argv[i] == "-dims":
             dims = int(argv[i+1])
         if argv[i] == "-res":
-        
+            res = int(argv[i+1])
         if argv[i] == "-iter":
-
+            iter = int(argv[i+1])
         if argv[i] == "-timesteps":
-
+            timesteps = int(argv[i+1])
         i+=2
-    par = Param(20, 2<<10, 0.0001, 100000, False, 50)
+    par = Param(20, res, 0.0001, timesteps, False, 50)
 
     # Starting wavefunction slightly offset so we can see it change
     
