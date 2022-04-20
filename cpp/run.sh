@@ -1,4 +1,16 @@
 #!/bin/bash
+###########################################
+# Author:       Debaditya Bhattacharya    #
+# Email:        debbh@iitk.ac.in          #
+# Affiliation:  IIT Kanpur                #
+# Course:       IDC606A                   #
+# Instructor:   Prof. Mahindra Verma      #
+#                                         #
+# File Name:    run.sh                    #
+# Description:  Run script which compiles #
+#               and runs testcases on the #
+#               projects.                 #
+###########################################
 touch output.txt
 # Compile the script
 make clean >> output.txt

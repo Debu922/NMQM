@@ -1,4 +1,17 @@
-#
+###########################################
+# Author:       Debaditya Bhattacharya    #
+# Email:        debbh@iitk.ac.in          #
+# Affiliation:  IIT Kanpur                #
+# Course:       IDC606A                   #
+# Instructor:   Prof. Mahindra Verma      #
+#                                         #
+# File Name:    Makefile                  #
+# Description:  Makefile used to auto     #
+#               compile into c++ code.    #
+#               Edit to add fftw-3.3.10   #
+###########################################
+
+
 # 'make'        build executable file 'main'
 # 'make clean'  removes all .o and executable files
 #

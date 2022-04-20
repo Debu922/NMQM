@@ -1,3 +1,16 @@
+/**
+*******************************************
+* Author:       Debaditya Bhattacharya    *
+* Email:        debbh@iitk.ac.in          *
+* Affiliation:  IIT Kanpur                *
+* Course:       IDC606A                   *
+* Instructor:   Prof. Mahindra Verma      *
+*                                         *
+* File Name:    wfc.hpp                   *
+* Description:  Contians functions used   *
+*               in overall simulation     *
+*******************************************
+**/
 #ifndef __WFC_H__
 #define __WFC_H__
 

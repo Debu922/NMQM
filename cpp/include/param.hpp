@@ -1,3 +1,17 @@
+/**
+*******************************************
+* Author:       Debaditya Bhattacharya    *
+* Email:        debbh@iitk.ac.in          *
+* Affiliation:  IIT Kanpur                *
+* Course:       IDC606A                   *
+* Instructor:   Prof. Mahindra Verma      *
+*                                         *
+* File Name:    param.cpp                 *
+* Description:  Param class. Holds all    *
+*               the Parameters used in    *
+*               the Simulation.           *
+*******************************************
+**/
 #ifndef __PARAM_H__
 #define __PARAM_H__
 
