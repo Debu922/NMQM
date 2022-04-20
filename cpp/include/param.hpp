@@ -28,7 +28,8 @@ public:
   double psiV2Offset;
   double psiV3Offset;
 
-  double verbose ;
+  bool verbose;
+  bool verify;
   int iter;
   
 

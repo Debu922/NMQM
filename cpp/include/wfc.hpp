@@ -2,9 +2,8 @@
 #define __WFC_H__
 
 #include <complex>
-#include "param.h"
+#include "param.hpp"
 #include <fftw3.h>
-// using namespace std::complex_literals;
 
 class WFC
 {
@@ -53,8 +52,9 @@ public:
 
   WFC(Param *p);
   void reset_WFC();
-  double norm();
 
+  double norm();
+  double energy();
 };
 
 #endif // __WFC_H__

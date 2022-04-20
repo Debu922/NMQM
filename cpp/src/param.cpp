@@ -1,6 +1,24 @@
-#include "param.h"
+/**
+*******************************************
+* Author:       Debaditya Bhattacharya    *
+* Email:        debbh@iitk.ac.in          *
+* Affiliation:  IIT Kanpur                *
+* Course:       IDC606A                   *
+* Instructor:   Prof. Mahindra Verma      *
+*                                         *
+* File Name:    param.cpp                 *
+* Description:  Param class. Holds all    *
+*               the Parameters used in    *
+*               the Simulation.           *
+*******************************************
+**/
+#include "param.hpp"
 #include "iostream"
 
+/**
+ * @brief This function allocates memory for the unit vectors.
+ * 
+ */
 void Param::alloc_vector()
 {
   if (dims >= 1)
@@ -21,6 +39,10 @@ void Param::alloc_vector()
   return;
 }
 
+/**
+ * @brief Set 1D axis vector
+ * 
+ */
 void Param::set_x_1D()
 {
   for (int i = 0; i < Nx; i++)
@@ -30,6 +52,10 @@ void Param::set_x_1D()
   return;
 }
 
+/**
+ * @brief Set 2D axis vector 
+ * 
+ */
 void Param::set_x_2D()
 {
   set_x_1D();
@@ -40,6 +66,10 @@ void Param::set_x_2D()
   return;
 }
 
+/**
+ * @brief Set 3D axis vector
+ * 
+ */
 void Param::set_x_3D()
 {
   set_x_2D();
@@ -50,6 +80,10 @@ void Param::set_x_3D()
   return;
 }
 
+/**
+ * @brief Set 1D axis vector (momentum)
+ * 
+ */
 void Param::set_k_1D()
 {
   for (int i = 0; i < Nx / 2; i++)
@@ -60,6 +94,10 @@ void Param::set_k_1D()
   return;
 }
 
+/**
+ * @brief Set 2D axis vector (momentum)
+ * 
+ */
 void Param::set_k_2D()
 {
   set_k_1D();
@@ -70,6 +108,10 @@ void Param::set_k_2D()
   }
 }
 
+/**
+ * @brief Set 3D axis vector (momentum)
+ * 
+ */
 void Param::set_k_3D()
 {
   set_k_2D();
@@ -80,11 +122,20 @@ void Param::set_k_3D()
   }
 }
 
+/**
+ * @brief Construct a new Param:: Param object
+ * Create empty constructor object. Previously filled with initialization code but now replaced by Param::init_param()
+ * 
+ */
 Param::Param()
 {
-  
 }
 
+/**
+ * @brief Initialize the param class.
+ * Allocates Memory and checks for incorrect dimentions.
+ * 
+ */
 void Param::init_param()
 {
   alloc_vector();
@@ -105,8 +156,7 @@ void Param::init_param()
   }
   else
   {
-    std::cout<<"Invalid dimentions. Accepted dimentions: 1, 2, 3";
-    exit(-1);
+    std::cout << "Invalid dimentions. Accepted dimentions: 1, 2, 3";
+    exit(1);
   }
 }
-

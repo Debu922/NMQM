@@ -53,7 +53,7 @@ def init(par: Param, voffset: float, wfcoffset: float, velocity:float) -> Operat
     opr = Operators(len(par.x))
     opr.V = 0.5 * (par.x - voffset) ** 2
     # Free Particle
-    opr.V = opr.V*0
+    # opr.V = opr.V*0
     
     # Wall:
 
@@ -180,15 +180,15 @@ def main() -> None:
     
 
     opr = init(par, 0.0, -10,10)
-    # energy = calculate_energy(par, opr)
-    # print("Energy at start is: ", energy)
+    energy = calculate_energy(par, opr)
+    print("Energy at start is: ", energy)
     start = timer()
     output = split_op(par, opr)
     end = timer()
     print(end - start) 
 
-    # energy = calculate_energy(par, opr)
-    # print("Energy at end is: ", energy)
+    energy = calculate_energy(par, opr)
+    print("Energy at end is: ", energy)
 
     # generate_animation(output,par,energy)
 

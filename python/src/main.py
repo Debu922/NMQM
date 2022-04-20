@@ -24,13 +24,13 @@ for i in range(para.Ngt):
     G.i_time_sstep_strang()
     abs_psi = np.abs(G.psi).squeeze()
     output[i,:] = abs_psi
-    # if (para.tstepMov[j]-t)/para.dt<para.dt:
-    #     print('\n----------------------')
-    #     print('t: ',t)
-    #     print('norm: ',G.norm())
-    #     print('energy: ',G.energy())
-    #     j=j+1
-    # t =t+para.dt
+    if (para.tstepMov[j]-t)/para.dt<para.dt:
+        print('\n----------------------')
+        print('t: ',t)
+        print('norm: ',G.norm())
+        print('energy: ',G.energy())
+        j=j+1
+    t =t+para.dt
 print(len(output))
 
 figure,ax = plt.subplots(figsize=(15, 8))
