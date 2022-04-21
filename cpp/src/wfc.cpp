@@ -17,7 +17,7 @@
 
 /**
  * @brief Allocates memory for the variables to be used.
- * 
+ *
  */
 void WFC::alloc_var()
 {
@@ -46,7 +46,7 @@ void WFC::alloc_var()
 
 /**
  * @brief Create a 1D Gaussian wave function according to the parameters defined in param.
- * 
+ *
  */
 void WFC::set_psi_1D()
 {
@@ -65,7 +65,7 @@ void WFC::set_psi_1D()
 
 /**
  * @brief Create a 2D Gaussian wave function according to the parameters defined in param.
- * 
+ *
  */
 void WFC::set_psi_2D()
 {
@@ -88,10 +88,9 @@ void WFC::set_psi_2D()
     }
 }
 
-
 /**
  * @brief Create a 3D Gaussian wave function according to the parameters defined in param.
- * 
+ *
  */
 void WFC::set_psi_3D()
 {
@@ -117,10 +116,9 @@ void WFC::set_psi_3D()
     }
 }
 
-
 /**
  * @brief Set the potential for a 1D system. (Harmonic Potential)
- * 
+ *
  */
 void WFC::set_V_1D()
 {
@@ -132,7 +130,7 @@ void WFC::set_V_1D()
 
 /**
  * @brief Set the potential for a 2D system. (Harmonic Potential)
- * 
+ *
  */
 void WFC::set_V_2D()
 {
@@ -145,10 +143,9 @@ void WFC::set_V_2D()
     }
 }
 
-
 /**
  * @brief Set the potential for a 3D system. (Harmonic Potential)
- * 
+ *
  */
 void WFC::set_V_3D()
 {
@@ -165,10 +162,9 @@ void WFC::set_V_3D()
     }
 }
 
-
 /**
  * @brief Set the kinetic terms for a 1D system.
- * 
+ *
  */
 void WFC::set_K_1D()
 {
@@ -179,10 +175,9 @@ void WFC::set_K_1D()
     }
 }
 
-
 /**
  * @brief Set the kinetic terms for a 2D system.
- * 
+ *
  */
 void WFC::set_K_2D()
 {
@@ -196,10 +191,9 @@ void WFC::set_K_2D()
     }
 }
 
-
 /**
  * @brief Set the kinetic terms for a 3D system.
- * 
+ *
  */
 void WFC::set_K_3D()
 {
@@ -219,7 +213,7 @@ void WFC::set_K_3D()
 
 /**
  * @brief Set the real time evolution terms for a 1D system.
- * 
+ *
  */
 void WFC::set_R_1D()
 {
@@ -230,10 +224,9 @@ void WFC::set_R_1D()
     }
 }
 
-
 /**
  * @brief Set the real time evolution terms for a 2D system.
- * 
+ *
  */
 void WFC::set_R_2D()
 {
@@ -249,7 +242,7 @@ void WFC::set_R_2D()
 
 /**
  * @brief Set the real time evolution terms for a 3D system.
- * 
+ *
  */
 void WFC::set_R_3D()
 {
@@ -269,7 +262,7 @@ void WFC::set_R_3D()
 
 /**
  * @brief Perform 1D half step in real space.
- * 
+ *
  */
 void WFC::R_half_step_1D()
 {
@@ -281,92 +274,71 @@ void WFC::R_half_step_1D()
 
 /**
  * @brief Perform 2D half step in real space.
- * 
+ *
  */
 void WFC::R_half_step_2D()
 {
-    for (int i = 0; i < param->Nx; i++)
+    for (int i = 0; i < param->Nx * param->Nx; i++)
     {
-        for (int j = 0; j < param->Nx; j++)
-        {
-            psi[i * param->Nx + j] *= R[i * param->Nx + j];
-        }
+        psi[i] *= R[i];
     }
 }
 
 /**
  * @brief Perform 3D half step in real space.
- * 
+ *
  */
 void WFC::R_half_step_3D()
 {
-    int Nx = param->Nx;
-    for (int i = 0; i < param->Nx; i++)
+    for (int i = 0; i < param->Nx * param->Nx * param->Nx; i++)
     {
-        for (int j = 0; j < param->Nx; j++)
-        {
-            for (int k = 0; k < param->Nx; k++)
-            {
-                psi[(i * Nx + j) * Nx + k] *= R[(i * Nx + j) * Nx + k];
-            }
-        }
+        psi[i] *= R[i];
     }
 }
 
-
 /**
- * @brief Perform 1D step in momentum space. Wave function is normalizied for FT also. 
- * 
+ * @brief Perform 1D step in momentum space. Wave function is normalizied for FT also.
+ *
  */
 void WFC::K_full_step_1D()
 {
     double x = 1.0 / param->Nx;
     for (int i = 0; i < param->Nx; i++)
     {
-        psi[i] *= K[i]*x;
+        psi[i] *= K[i] * x;
     }
 }
 
 /**
- * @brief Perform 2D step in momentum space. Wave function is normalizied for FT also. 
- * 
+ * @brief Perform 2D step in momentum space. Wave function is normalizied for FT also.
+ *
  */
 void WFC::K_full_step_2D()
 {
-    double x = 1.0 / (param->Nx*param->Nx);
-    for (int i = 0; i < param->Nx; i++)
+    double x = 1.0 / (param->Nx * param->Nx);
+    for (int i = 0; i < param->Nx * param->Nx; i++)
     {
-        for (int j = 0; j < param->Nx; j++)
-        {
-            psi[i * param->Nx + j] *= K[i * param->Nx + j]*x;
-        }
+        psi[i] *= K[i] * x;
     }
 }
 
-
 /**
- * @brief Perform 3D step in momentum space. Wave function is normalizied for FT also. 
- * 
+ * @brief Perform 3D step in momentum space. Wave function is normalizied for FT also.
+ *
  */
 void WFC::K_full_step_3D()
 {
     long Nx = param->Nx;
-    double x = 1.0 / (Nx*Nx*Nx);
-    for (int i = 0; i < param->Nx; i++)
+    double x = 1.0 / (Nx * Nx * Nx);
+    for (int i = 0; i < param->Nx * param->Nx * param->Nx; i++)
     {
-        for (int j = 0; j < param->Nx; j++)
-        {
-            for (int k = 0; k < param->Nx; k++)
-            {
-                psi[(i * Nx + j) * Nx + k] *= K[(i * Nx + j) * Nx + k]*x;
-            }
-        }
+        psi[i] *= K[i] * x;
     }
 }
 
 /**
  * @brief Setup FFTW plan for 1D FT transorms.
- * 
+ *
  */
 void WFC::FT_1D()
 {
@@ -382,10 +354,9 @@ void WFC::FT_1D()
                                      FFTW_BACKWARD, FFTW_ESTIMATE);
 }
 
-
 /**
  * @brief Setup FFTW plan for 2D FT transorms.
- * 
+ *
  */
 void WFC::FT_2D()
 {
@@ -402,10 +373,9 @@ void WFC::FT_2D()
                                      FFTW_BACKWARD, FFTW_ESTIMATE);
 }
 
-
 /**
  * @brief Setup FFTW plan for 3D FT transorms.
- * 
+ *
  */
 void WFC::FT_3D()
 {
@@ -423,10 +393,9 @@ void WFC::FT_3D()
                                      FFTW_BACKWARD, FFTW_ESTIMATE);
 }
 
-
 /**
  * @brief Perform a time evolution step.
- * 
+ *
  */
 void WFC::step()
 {
@@ -457,10 +426,9 @@ void WFC::step()
     }
 }
 
-
 /**
  * @brief Simulate the system by performing multiple steps
- * 
+ *
  * @param nSteps Number of steps to simulate
  */
 void WFC::simulate(int nSteps)
@@ -473,7 +441,7 @@ void WFC::simulate(int nSteps)
 
 /**
  * @brief Construct a new WFC::WFC object
- * 
+ *
  * @param p Pointer to Params object
  */
 WFC::WFC(Param *p)
@@ -485,7 +453,7 @@ WFC::WFC(Param *p)
 
 /**
  * @brief Reset the wave function to original condtions. Also used to intialize the wavefunction for the first time.
- * 
+ *
  */
 void WFC::reset_WFC()
 {
@@ -519,7 +487,7 @@ void WFC::reset_WFC()
 
 /**
  * @brief Calculate the norm of the probability distribution. Should be equal to 1.
- * 
+ *
  * @return double Norm.
  */
 double WFC::norm()
@@ -540,8 +508,8 @@ double WFC::norm()
 
 /**
  * @brief Calculate the energy of the wavefunction. Should be constant for a closed system.
- * The energy is calculated as <psi|H|psi>. 
- * 
+ * The energy is calculated as <psi|H|psi>.
+ *
  * @return double Energy.
  */
 double WFC::energy()
@@ -552,7 +520,7 @@ double WFC::energy()
         N = param->Nx * param->Nx;
     if (param->dims == 3)
         N = param->Nx * param->Nx * param->Nx;
-    
+
     // Init array to keep psi copy and psi conjugate.
     std::complex<double> psi_copy[N];
     std::complex<double> psi_conj[N];
@@ -562,10 +530,10 @@ double WFC::energy()
         psi_conj[i] = conj(psi[i]);
     }
     fftw_execute(FT_forward_plan);
-    double x = 1.0/N;
+    double x = 1.0 / N;
     for (long i = 0; i < N; i++)
     {
-        psi[i] = psi[i] * K[i] * K[i]*x;
+        psi[i] = psi[i] * K[i] * K[i] * x;
     }
     fftw_execute(FT_backward_plan);
     for (long i = 0; i < N; i++)

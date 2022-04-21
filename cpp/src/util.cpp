@@ -114,8 +114,8 @@ Param set_params(int argc, char **argv)
         if (strcmp(argv[i], "-xmax") == 0)
             param.xmax = atof(argv[i + 1]);
 
-        if (strcmp(argv[i], "-res") == 0)
-            param.res = atoi(argv[i + 1]);
+        if (strcmp(argv[i], "-Nx") == 0)
+            param.res = atoi(argv[i + 1])/2;
 
         if (strcmp(argv[i], "-dims") == 0)
             param.dims = atoi(argv[i + 1]);
