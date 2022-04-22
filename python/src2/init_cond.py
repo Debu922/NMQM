@@ -9,11 +9,11 @@ def initcond1(G,dims):
     Initial wavefunction
     '''
     if para.dimension==1:
-        G.psi = (1/np.pi**(1/4))*np.exp(-(my_fft.z_mesh**2/2+my_fft.y_mesh**2+my_fft.x_mesh**2/2))+0j  #1D initial condition
+        G.psi = np.exp(-(my_fft.z_mesh**2/2))+0j  #1D initial condition
     if para.dimension==2:
-        G.psi = (1/(np.pi)**(1/2))*np.exp(-(my_fft.z_mesh**2/2+my_fft.y_mesh**2+my_fft.x_mesh**2/2))+0j  #2D initial condition
+        G.psi = np.exp(-(my_fft.z_mesh**2/2+my_fft.x_mesh**2/2))+0j  #2D initial condition
     if para.dimension==3:
-        G.psi = (1/(np.pi)**(3/4))*np.exp(-(my_fft.z_mesh**2+my_fft.y_mesh**2+my_fft.x_mesh**2)/2)+0j  # 3D initial condition
+        G.psi = np.exp(-(my_fft.z_mesh**2+my_fft.y_mesh**2+my_fft.x_mesh**2)/2)+0j  # 3D initial condition
     G.psi /= np.sqrt(G.norm())
 
 
